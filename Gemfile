@@ -5,6 +5,5 @@ gem 'debugger'
 gem 'tilt'
 gem 'artii'
 gem 'colorize'
-gem 'haml'
 gem 'rmagick'
-gem 'thor'
+gem "boson", "~> 1.2.4"
