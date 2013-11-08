@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     artii (2.0.3)
+    boson (1.2.4)
     colorize (0.6.0)
     columnize (0.3.6)
     debugger (1.6.2)
@@ -10,10 +11,7 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
-    haml (4.0.4)
-      tilt
     rmagick (2.13.2)
-    thor (0.18.1)
     tilt (1.4.1)
 
 PLATFORMS
@@ -21,10 +19,9 @@ PLATFORMS
 
 DEPENDENCIES
   artii
+  boson (~> 1.2.4)
   bundler
   colorize
   debugger
-  haml
   rmagick
-  thor
   tilt
