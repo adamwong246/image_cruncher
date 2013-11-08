@@ -1,0 +1,8 @@
+.autotest
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/image_cruncher
+lib/image_cruncher.rb
+test/test_image_cruncher.rb
