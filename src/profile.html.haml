@@ -4,7 +4,12 @@
     %meta{content: "text/html; charset=utf-8", "http-equiv" => "content-type"}/
     %title #{self[:title]}
   %body
-    %img{src: self[:source_image], style: "max-width:500px;"}
+    %p 
+      Original
+    %img{src: self[:source_image],    style: "max-width:500px;"}
+    %p 
+      Quantized to #{self[:colors].length} colors
+    %img{src: self[:quantized_image], style: "max-width:500px;"}
     %p
       = self
     %table

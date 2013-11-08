@@ -7,10 +7,13 @@ require 'debugger'
 class ImageCruncher
   VERSION = "1.0.0"
 
-  def self.crunch(src, number_of_colors )
+  def self.quantize(src, number_of_colors)
     Magick::ImageList.new(src)
     .quantize(number_of_colors, Magick::RGBColorspace)
-    .color_histogram
+  end
+
+  def self.extract_colors(image)
+    image.color_histogram
     .map{|a| 
       {
         color: a[0],
@@ -20,7 +23,10 @@ class ImageCruncher
     .sort {|a, b| 
       b[:predominance] <=> a[:predominance]
     }
+  end
 
+  def self.crunch(src, number_of_colors )
+    extract_colors(quantize(src, number_of_colors))    
   end
 
   def self.crunch_pretty(src, number_of_colors)
@@ -33,23 +39,32 @@ class ImageCruncher
   end
 
   def self.generate_profile(src, number_of_colors)    
-    template_file = "../src/profile.html.haml"
-    file_name_output = "#{File.basename(src, ".*" )}_#{File.basename(template_file, ".*" )}"
-    copied_image = File.basename(src)
+    template_file_path         = "../src/profile.html.haml"
+    output_file_path           = "#{File.basename(src, ".*" )}_#{File.basename(template_file_path, ".*" )}"
+    copied_image_file_path     = File.basename(src)
+    quantized_image_file_path  = "quantized_#{File.basename(src)}"
 
-    template = Tilt.new(template_file)
-    output_string = template.render (
+    quantized_image = quantize(src, number_of_colors)
+
+    output = Tilt.new(template_file_path).render (
       {
-        title:        file_name_output,
-        source_image: copied_image,
-        colors:       crunch_pretty(src, number_of_colors)        
+        title:           output_file_path,
+        source_image:    copied_image_file_path,
+        quantized_image: quantized_image_file_path,
+        colors:          extract_colors(quantized_image).map {|a| 
+          {
+            color: a[:color].to_color(Magick::AllCompliance, false, 8, true), 
+            predominance: a[:predominance]
+          }        
+        }
       }
     )    
 
-    puts "... #{file_name_output}"
-    File.open(file_name_output, 'w') { |f| f.puts(output_string) }
+    puts "... #{output_file_path}"
+    File.open(output_file_path, 'w') { |f| f.puts(output) }
 
-    FileUtils.cp src, copied_image
+    FileUtils.cp src, copied_image_file_path
+    quantized_image.write(quantized_image_file_path)
                    
   end
 end
