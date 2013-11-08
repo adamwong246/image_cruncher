@@ -11,6 +11,8 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    haml (4.0.4)
+      tilt
     rmagick (2.13.2)
     tilt (1.4.1)
 
@@ -23,5 +25,6 @@ DEPENDENCIES
   bundler
   colorize
   debugger
+  haml
   rmagick
   tilt

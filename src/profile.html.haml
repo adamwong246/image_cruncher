@@ -1,0 +1,16 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{content: "text/html; charset=utf-8", "http-equiv" => "content-type"}/
+    %title #{self[:title]}
+  %body
+    %img{src: self[:source_image], style: "max-width:500px;"}
+    %p
+      = self
+    %table
+      - self[:colors].each do |h|
+        %tr{ :style => "background-color: #{h[:color]}" }
+          - self[:colors].each do |hh|
+            %td
+              %p{ :style => "color: #{hh[:color]}" }
+                %b #{hh[:color]} on #{h[:color]}
